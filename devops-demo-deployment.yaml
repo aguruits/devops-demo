@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: devops-demo-deployment
+  labels:
+    app: devops-demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: devops-demo
+  template: 
+    metadata:
+      name: devops-demo
+      labels:
+        app: devops-demo
+    spec:
+      containers:
+      - name: devops-demo
+        image: aguruits/devops-demo
+        ports:
+          - containerPort: 9090
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: devops-demo-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: devops-demo
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      
+      
+
+      
+  
